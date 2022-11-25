@@ -18,13 +18,20 @@ const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology:
 async function run(){
     try{
         const productCollection = client.db('resaleProduct').collection('product');
+        const userRoleCollection = client.db('resaleProduct').collection('userRole');
 
         app.post('/add-product', async(req, res)=>{
             const product = req.body;
             // console.log(product);
             const result = await productCollection.insertOne(product);
             res.send(result);
-        })
+        });
+
+        app.post('/user-role', async(req, res)=>{
+            const role = req.body;
+            const result = await userRoleCollection.insertOne(role);
+            res.send(result);
+        });
 
         
     }
