@@ -12,22 +12,27 @@ app.use(cors());
 app.use(express.json());
 
 
-
-// const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.lbe4zil.mongodb.net/?retryWrites=true&w=majority`;
+const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.lbe4zil.mongodb.net/?retryWrites=true&w=majority`;
 // console.log(uri);
-// const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
-// async function run(){
-//     try{
-//         const appointmentOptionCollection = client.db('doctorsPortal').collection('appointmentOptions');
-//         const bookingCollection = client.db('doctorsPortal').collection('bookings');
+const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
+async function run(){
+    try{
+        const productCollection = client.db('resaleProduct').collection('product');
+
+        app.post('/add-product', async(req, res)=>{
+            const product = req.body;
+            // console.log(product);
+            const result = await productCollection.insertOne(product);
+            res.send(result);
+        })
 
         
-//     }
-//     finally{
+    }
+    finally{
 
-//     }
-// }
-// run().catch(err=>console.log(err))
+    }
+}
+run().catch(err=>console.log(err))
 
 
 app.get('/', async(req, res) =>{
