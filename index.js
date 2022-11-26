@@ -20,6 +20,7 @@ async function run(){
         const productCollection = client.db('resaleProduct').collection('product');
         const userRoleCollection = client.db('resaleProduct').collection('userRole');
 
+        // API for adding Product 
         app.post('/add-product', async(req, res)=>{
             const product = req.body;
             // console.log(product);
@@ -27,11 +28,46 @@ async function run(){
             res.send(result);
         });
 
+        // API for post user & seller information 
         app.post('/user-role', async(req, res)=>{
             const role = req.body;
             const result = await userRoleCollection.insertOne(role);
             res.send(result);
         });
+
+        app.get('/products/:email', async (req, res) => {
+            const query = { email: req.params.email };
+            const result = await productCollection.find(query).toArray();
+            res.send(result);
+          });
+
+        //   app.get('/review', async(req, res) =>{
+        //     // console.log(req.query.email);
+        //     let query = {};
+        //     if(req.query.email){
+        //         query={
+        //             email: req.query.email
+        //         }
+        //     }
+        //     const review = await reviewCollection.find(query).toArray();
+        //     res.send(review);
+        // })
+
+        // API for get products 
+        // app.get('/products', async(req, res)=>{
+        //     const query = {_id: ObjectId(id)};
+        //     const cursor = productCollection.find(query);
+        //     console.log(productCollection);
+        //     const products = await cursor.toArray();
+        //     return res.send(products);
+        // })
+
+        // app.get('/services/:id', async(req, res)=>{
+        //     const id = req.params.id;
+        //     const query ={_id: ObjectId(id)};
+        //     const service = await serviceCollection.findOne(query);
+        //     res.send(service);
+        // })
 
         
     }
