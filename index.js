@@ -20,7 +20,7 @@ async function run(){
         const productCollection = client.db('resaleProduct').collection('product');
         const userRoleCollection = client.db('resaleProduct').collection('userRole');
 
-        // API for adding Product 
+        // Api for adding Product 
         app.post('/add-product', async(req, res)=>{
             const product = req.body;
             // console.log(product);
@@ -28,18 +28,26 @@ async function run(){
             res.send(result);
         });
 
-        // API for post user & seller information 
+        // Api for post user & seller information 
         app.post('/user-role', async(req, res)=>{
             const role = req.body;
             const result = await userRoleCollection.insertOne(role);
             res.send(result);
         });
 
+        // Api for sellers own product 
         app.get('/products/:email', async (req, res) => {
             const query = { email: req.params.email };
             const result = await productCollection.find(query).toArray();
             res.send(result);
-          });
+        });
+        
+        // Api for categorywise data 
+        app.get('/product/:category', async (req, res) => {
+            const query = { category: req.params.category };
+            const result = await productCollection.find(query).toArray();
+            res.send(result);
+        });
 
         //   app.get('/review', async(req, res) =>{
         //     // console.log(req.query.email);
