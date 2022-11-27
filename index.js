@@ -19,6 +19,7 @@ async function run(){
     try{
         const productCollection = client.db('resaleProduct').collection('product');
         const userRoleCollection = client.db('resaleProduct').collection('userRole');
+        const orderCollection = client.db('resaleProduct').collection('order');
 
         // Api for adding Product 
         app.post('/add-product', async(req, res)=>{
@@ -46,6 +47,13 @@ async function run(){
         app.get('/product/:category', async (req, res) => {
             const query = { category: req.params.category };
             const result = await productCollection.find(query).toArray();
+            res.send(result);
+        });
+
+        // Api for adding order 
+        app.post('/add-order', async(req, res)=>{
+            const order = req.body;
+            const result = await orderCollection.insertOne(order);
             res.send(result);
         });
 
