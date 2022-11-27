@@ -57,6 +57,20 @@ async function run(){
             res.send(result);
         });
 
+        // Api for all seller 
+        app.get('/category/:role', async (req, res) => {
+            const query = { role: req.params.role };
+            const result = await userRoleCollection.find(query).toArray();
+            res.send(result);
+        });
+
+
+        // app.get('/all-seller', async (req, res) => {
+        //     const query = {};
+        //     const result = await orderCollection.find(query).toArray();
+        //     res.send(result);
+        // });
+
         //   app.get('/review', async(req, res) =>{
         //     // console.log(req.query.email);
         //     let query = {};
