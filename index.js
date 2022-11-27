@@ -64,12 +64,12 @@ async function run(){
             res.send(result);
         });
 
-
-        // app.get('/all-seller', async (req, res) => {
-        //     const query = {};
-        //     const result = await orderCollection.find(query).toArray();
-        //     res.send(result);
-        // });
+        // Api for orders depends on email 
+        app.get('/my-orders/:email', async (req, res) => {
+            const query = {email: req.params.email};
+            const result = await orderCollection.find(query).toArray();
+            res.send(result);
+        });
 
         //   app.get('/review', async(req, res) =>{
         //     // console.log(req.query.email);
